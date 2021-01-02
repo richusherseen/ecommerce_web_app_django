@@ -1,0 +1,159 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <!--------custome css--------->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Crafty</title>
+    <link rel="shortcut icon" href="{% static 'images/images/fav-icon.png' %}">
+</head>
+
+<body>
+
+    <!----------navigation bar----------->
+
+    <header>
+
+        <div class="row nav-row">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">LOGO</a>
+                <button class="navbar-toggler m-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#">gifts</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                home decor
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">collectibles</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">garden & outdoor</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">living room</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                fashion
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">men</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">women</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                home care
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">detergents</a>
+
+                            </div>
+                        </li>
+                    </ul>
+
+
+
+                </div>
+
+            </nav>
+
+            <!----right side of the nav bar---->
+            <div class="col-md-2 col-2 m-auto right-menu">
+                <a href="#">vendor</a>
+                <a href="#" class="search">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="user" data-toggle="modal" data-target="#loginpopup">
+                    <i class="far fa-user"></i>
+                </a>
+                <!-- Modal -->
+                <div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <strong>Log In</strong>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form">
+                                    <!--login---------->
+                                    <div class="login-form">
+
+                                        <!--inputs-->
+                                        <form>
+                                            <input type="email" name="email" placeholder="Example@gmail.com" required />
+                                            <input type="password" name="password" placeholder="Password" required />
+                                            <input type="submit" value="Log In" />
+                                        </form>
+                                        <!--forget-and-sign-up-btn-->
+                                        <div class="form-btns">
+                                            <a href="#" class="forget">Forget Your Password?</a>
+                                            <a href="#" class="sign-up-btn">Create Account</a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <i class="fas fa-shopping-cart">
+                        <span class="num-cart-product">0</span>
+                    </i>
+                </a>
+            </div>
+        </div>
+
+    </header>
+
+
+    {% block content %}{% endblock %}
+
+
+    <!------------ Using FontAwesome -------------->
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/c8e4d183c2.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    </body>
+    </html>
