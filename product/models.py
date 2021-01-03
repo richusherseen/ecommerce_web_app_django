@@ -41,7 +41,7 @@ class Order(models.Model):
     ("closed", "closed"),  
    )
 
-    order_status = models.CharField(,max_length = 200,choices=status_choice,default = 'Pending')
+    order_status = models.CharField(max_length = 200,choices=status_choice,default = 'Pending')
 
 class OrderItem(models.Model):
     product = models.ForeignKey(ProductModel, on_delete=models.SET_NULL, blank = True, null = True)
