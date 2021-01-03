@@ -1,5 +1,6 @@
 from django import forms
-from master.models import Vendor,CategoryModel
+from vendor.models import Vendor
+from product.models import CategoryModel
 
 class VendorForm(forms.ModelForm):
     class Meta:
