@@ -43,7 +43,7 @@ Manage Category
                           <tr>
                             <td>{{ category.id }}</td>
                             <td>{{ category.category_name }}</td>
-                            <td><a href="/edit_category/{{ category.id }}" class="btn btn-outline-info ">Edit</a>
+                            <td><a href="{% url 'category_edit' category.id %}" class="btn btn-outline-info ">Edit</a>
                               <a class="confirm-delete btn btn-outline-danger" href="/delete_category/{{ category.id }}" >Delete</a>
                               {% block custom_js %}
                               <script>

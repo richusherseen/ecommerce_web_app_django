@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,View,CreateView,ListView
 from customer.models import ContactUs
 from customer.forms import RegisterForm,LoginForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,auth
 
 class HomeView(View):
 	form_class = LoginForm
@@ -27,8 +27,15 @@ class HomeView(View):
 			user = User.objects.create(username = request.POST.get('username'),password=request.POST.get('password'))
 			
 			user.save()
-			return redirect('home/')
+			return redirect('/home')
 		
+		# form = self.form_class(request.POST)
+		# if form.is_valid():
+		# 	username = request.POST.get('username')
+		# 	password = request.POST.get('password')
+		# 	user=auth.authenticate(username=username,password=password)
+		# 	print(user)
+		# 	return redirect('/home')
 			
 		
 def contact(request):

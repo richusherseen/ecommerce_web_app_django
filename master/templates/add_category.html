@@ -18,7 +18,7 @@ Add Category
                     <!-- /.card-header -->
                     <!-- form start -->
                     <div class="container">
-                    <form role="form" action="/add_category_save" method="POST">
+                    <form role="form"  method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
 

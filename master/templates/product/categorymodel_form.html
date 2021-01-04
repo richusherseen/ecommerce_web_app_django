@@ -1,0 +1,69 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block page_title %}
+Edit Category
+{% endblock page_title %}
+{% block main_content %}
+
+<link  rel="stylesheet" id="bootstrap-css" href="{% static 'css/bootstrap.min.css' %}">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="https://kit.fontawesome.com/c0d12c7483.js" crossorigin="anonymous"></script> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <link href="css/fineCrop.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-dark">
+                      <div class="card-header">
+                        <h3 class="card-title">Edit Vendor</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form role="form" enctype="multipart/form-data" method="POST">
+                          {% csrf_token %}
+                          {{form|crispy}}
+             
+                       
+                          
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-outline-primary btn-block">Edit Vendor</button>
+                        </div>
+                        <div class="form-group">
+                            {% if messages %}
+                               {% for message in messages %}
+                               {% if message.tags == 'error' %} 
+                                <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div>
+                                {% endif %} 
+                                {% if message.tags == 'success' %} 
+                                <div class="alert alert-success" style="margin-top: 10px;">{{ message }}</div>
+                                {% endif %} 
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                      </form>
+                    </div>
+                    <!-- /.card -->
+        
+        
+                  </div>
+            </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content --><script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+
+
+  
+{% endblock main_content %}
+
+

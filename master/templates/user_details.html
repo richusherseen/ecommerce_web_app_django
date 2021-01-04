@@ -40,13 +40,13 @@ User Details
                           </tr>
                         </thead>
                         <tbody>
-                          {% for staff in staffs %}
+                          {% for user in users %}
                           <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                           
                             <td><a href="#" class="btn btn-success ">Edit</a>
                               <a class="confirm-delete btn btn-danger" href="#" >Delete</a>
                               {% block custom_js %}

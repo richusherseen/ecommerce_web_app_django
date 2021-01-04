@@ -105,12 +105,12 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form">
+                                <div class="form" >
                                     <!--login---------->
                                     <div class="login-form">
 
                                         <!--inputs-->
-                                        <form>
+                                        <form method="POST">
                                             {% csrf_token %}
                                             {{ form.username }}
                                             {{ form.password }}

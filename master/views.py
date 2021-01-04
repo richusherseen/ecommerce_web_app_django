@@ -2,8 +2,9 @@ from django.shortcuts import render,redirect
 from django.views.generic import View,UpdateView
 from master.forms import VendorForm,CategoryForm
 from vendor.models import Vendor
-from django.urls import reverse_lazy
-# render the admin dashboard
+from product.models import CategoryModel
+from django.contrib.auth.models import User
+# render the admin dashboard    
 class MasterHome(View):
     def get(self, request):
         return render(request,'admin.html')
@@ -67,7 +68,16 @@ class AddVendor(View):
 #render the category management section that contain the section for managing the category
 class CategoryManagement(View):
     def get(self,request):
-        return render(request,'category_management.html')
+        categories = CategoryModel.objects.all()
+        context = {
+            'categories': categories
+        }
+        return render(request,'category_management.html',context)
+
+class CategoryUpdate(UpdateView):
+    model = CategoryModel
+    fields = ['category_name']
+    success_url='/category_management'
 
 class AddCategory(View):
     template_name = 'add_category.html'
@@ -79,6 +89,14 @@ class AddCategory(View):
             'form':form
         }
         return render(request,self.template_name,context)
+    
+    def post(self,request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            category=request.POST.get('category_name')
+            category = CategoryModel.objects.create(category_name=category)
+            return redirect('category_management')
+
 
 class OrderDetails(View):
     def get(self,request):
@@ -86,4 +104,8 @@ class OrderDetails(View):
 
 class UserDetails(View):
     def get(self,request):
-        return render(request,'user_details.html')
+        users = User.objects.all()
+        context = {
+            'users' : users
+        }
+        return render(request,'user_details.html',context)
