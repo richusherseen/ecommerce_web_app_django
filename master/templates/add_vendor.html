@@ -30,47 +30,11 @@ Add Vendor
                     <!-- /.card-header -->
                     <!-- form start -->
                    
-                    <form role="form" action="/add_vendor_save" method="POST">
+                    <form role="form" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
 
-                        <div class="control-group">
-                            <label class="control-label" for="photo"></label>
-                            <div class="controls">
-                                <input required=True id="imageBaseData" name="image64data" class="input-file hidden"
-                                    type="text">
-
-                                <main class="page">
-                                    <label class="control-label" for="full_name">Vendor Logo</label>
-                                    <!-- input file -->
-                                    <div class="box">
-                                        <input type="file" id="file-input">
-                                    </div>
-                                    <!-- leftbox -->
-                                    <div class="box-2">
-                                        <div class="result"></div>
-                                    </div>
-                                    <!--rightbox-->
-                                    <div class="box-2 img-result hide">
-                                        <!-- result of crop -->
-                                        <img id="cropped" class="cropped" src="" alt=""></img>
-                                    </div>
-                                    <!-- input file -->
-                                    <div class="box">
-                                        <div class="options hide">
-                                            <label> </label>
-                                            <input type="hidden" name="myfile" class="img-w" value="300" min="100"
-                                                max="1200" />
-                                        </div>
-                                        <!-- save btn -->
-                                        <button id="load" class="btn btn-primary save hide">Confirm</button>
-                                        <!-- download btn -->
-                                        <a href="" id="" class="btn hidden"></a>
-                                        <!-- <button  id="load" class="  btn btn primary" type="button" >Upload</button> -->
-                                    </div>
-                                </main>
-                            </div>
-                        </div>
+                        
 
 
                         <div class="card-footer">

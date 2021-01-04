@@ -34,23 +34,28 @@ Manage vendor
                         <thead>
                           <tr>
                             <th>ID</th>
+                            <th>User Name</th>
                             <th>Shop Name</th>
-                            <th>Vendor Name</th>
-                            <th>City</th>
+                            <th>Address</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
                             <th>Logo</th>
                             <th>Actions </th>
                           </tr>
                         </thead>
                         <tbody>
-                          <!-- {% for vendor in vendors %}
+                          {% for vendor in vendors %}
                           <tr>
-                            <td>{{vendor.admin.id}}</td>
+                            <td>{{vendor.id}}</td>
+                            <td>{{vendor.username}}</td>
                             <td>{{ vendor.shop_name }}</td>
-                            <td>{{ vendor.admin.username }}</td>
-                            <td>{{ vendor.place }}</td>
-                            <td><img class="img-thumbnail" src="{{ vendor.imageURL }}" alt="Cinque Terre" style="height: 100px;width: 100px;"></td>
-                            <td><a href="/edit_vendor/{{ vendor.admin.id }}" class="btn btn-outline-info ">Edit</a>
-                              <a class="confirm-delete btn btn-outline-danger" href="delete_vendor/{{ vendor.admin.id }}" >Delete</a>
+                            <td>{{ vendor.address }}</td>
+                            <td>{{ vendor.mobile_number }}</td>
+                            <td>{{vendor.email}}</td>
+                            
+                            <td><img class="img-thumbnail" src="{{ vendor.imageURL }}" alt="Cinque Terre" style="height: 100px;width: 100px;"></td> 
+                            <td><a href="{% url 'vendor_edit' vendor.id %}" class="btn btn-outline-info ">Edit</a>
+                              <a class="confirm-delete btn btn-outline-danger" href="delete_vendor/{{ vendor.id }}" >Delete</a> 
                               {% block custom_js %}
                               <script>
                                   $(document).on('click', '.confirm-delete', function(){
@@ -62,7 +67,7 @@ Manage vendor
                              
                             
                              </tr>
-                          {% endfor %} -->
+                          {% endfor %} 
                         </tbody>
                       </table>
                     </div>
