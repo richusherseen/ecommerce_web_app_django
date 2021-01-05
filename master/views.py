@@ -1,11 +1,24 @@
 from django.shortcuts import render,redirect
 from django.views.generic import View,UpdateView,FormView
-from master.forms import VendorForm,CategoryForm,UserForm
+from master.forms import VendorForm,CategoryForm,UserForm,LoginForm
 from vendor.models import Vendor
 from product.models import CategoryModel
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-# render the admin dashboard    
+# render the admin dashboard  
+
+
+class LoginView(View):
+    form_class = LoginForm
+    def get(self,request):
+        form_class = LoginForm()
+        template_name = 'login.html'
+        context = {
+			'form':form_class,
+            }
+        return render(request,template_name,context)
+
+
 class MasterHome(View):
     def get(self, request):
         return render(request,'admin.html')
@@ -65,10 +78,9 @@ class AddVendor(FormView):
 			return self.render_to_response(self.get_context_data(form1=user_form,form2=vendor_form))
 
 def delete_vendor(request,vendor_id):
-    vendor=Vendor.objects.get(user=vendor_id)
-   # vendor.delete()
-    print(vendor)
-    return redirect("vendor_mangement")
+    vendor=Vendor.objects.get(id=vendor_id)
+    vendor.delete()
+    return redirect("/vendor_management")
 
 
 #render the category management section that contain the section for managing the category
@@ -102,6 +114,12 @@ class AddCategory(View):
             category=request.POST.get('category_name')
             category = CategoryModel.objects.create(category_name=category)
             return redirect('category_management')
+
+
+def delete_category(request,category_id):
+    category=CategoryModel.objects.get(id=category_id)
+    category.delete()
+    return redirect("/category_management")
 
 
 class OrderDetails(View):

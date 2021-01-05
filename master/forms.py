@@ -21,3 +21,10 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = CategoryModel
         fields = ['category_name']
+
+
+class LoginForm(forms.Form):
+    
+    username = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'User Name','class' : 'login-form'}))
+    password = forms.CharField(required=True,max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'password','class' : 'login-form'}))
+

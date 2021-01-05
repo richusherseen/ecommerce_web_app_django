@@ -55,13 +55,21 @@ Manage vendor
                             
                             <td><img class="img-thumbnail" src="{{ vendor.imageURL }}" alt="Cinque Terre" style="height: 100px;width: 100px;"></td> 
                             <td><a href="{% url 'vendor_edit' vendor.id %}" class="btn btn-outline-info ">Edit</a>
-                              <a class="confirm-delete btn btn-outline-danger" href="delete_vendor/{{ vendor.id }}" >Delete</a> 
+                              <form action="{% url 'delete_vendor' vendor.id %}" method="POST" onsubmit="window.ondelete()" style="display: inline;" id="hi">
+                                {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">Delete</button></form></td>
+                              <!-- <a class="confirm-delete btn btn-outline-danger" href="{% url 'delete_vendor' vendor.id %}" >Delete</a>  -->
+
                               {% block custom_js %}
-                              <script>
-                                  $(document).on('click', '.confirm-delete', function(){
-                                      return confirm('Are you sure you want to delete this?');
-                                  })
-                                </script>
+                              <script type="text/Javascript">
+                                window.ondelete= function(){
+                                  var isValid =confirm('Are you sure Do you Want To Delete ?');
+                                  if (!isValid){
+                                    event.preventDefault();
+                                    // alert("It Wont delete");
+                                  }
+                                }
+                              </script>
                               {% endblock custom_js %}
 
                              
