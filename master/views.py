@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
-from django.views.generic import View,UpdateView
-from master.forms import VendorForm,CategoryForm
+from django.views.generic import View,UpdateView,FormView
+from master.forms import VendorForm,CategoryForm,UserForm
 from vendor.models import Vendor
 from product.models import CategoryModel
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 # render the admin dashboard    
 class MasterHome(View):
     def get(self, request):
@@ -14,7 +15,6 @@ class VendorManagement(View):
 
     def get(self, request):
         vendors = Vendor.objects.all()
-        print(vendors[1].image)
         context = {
             'vendors' : vendors
         }
@@ -28,41 +28,41 @@ class VendorUpdate(UpdateView):
     success_url ='/vendor_management'
 
 #view for adding the vendor and delete the vendor 
-class AddVendor(View):
-    template_name = 'add_vendor.html'
-    form_class = VendorForm
-    
-    def get(self,request):
+class AddVendor(FormView):
+	template_name = 'add_vendor.html'
+	model = User
+	form_class = UserForm
+	success_url='/vendor_management'
+	
+	def get(self,request,*args,**kwargs):
+		self.object = None
+		form_class = self.get_form_class()
+		user_form = self.get_form(form_class)
+		vendor_form = VendorForm()
+		return self.render_to_response(self.get_context_data(form1=user_form,form2=vendor_form))
 
-        form = self.form_class()
-        context = {
+	def post(self,request,*args,**kwargs):
+		self.object = None
+		form_class = self.get_form_class()
+		user_form =self.get_form(form_class)
+		vendor_form = VendorForm(self.request.POST,self.request.FILES)
+		
+		if(user_form.is_valid() and vendor_form.is_valid()):
+			return self.form_valid(user_form, vendor_form)
+		else:
+			return self.form_invalid(user_form,vendor_form)
 
-            'form':form
-        }
-        return render(request,self.template_name,context)
-   
-    def post(self,request):
-        form = self.form_class(request.POST,request.FILES)
-       
-        if form.is_valid():
-            print('innnnnnnnnnnnnnnnnnnnnn')
-            # vendor = request.POST.get('vendor')
-            # image = request.FILES['image']
-            # print(image)
-            vendor = Vendor.objects.create(
-                username = request.POST.get('username'),
-                password = request.POST.get('password'),
-                confirm_password=request.POST.get('confirm_password'),
-                shope_name=request.POST.get('shope_name'),
-                address=request.POST.get('address'),
-                mobile_number=request.POST.get('mobile_number'),
-                email=request.POST.get('email'),
-                image = request.FILES.get('image'))
-            vendor.save()
-            
-            return redirect('vendor_management')
-        else:
-            print("koooijoif form is not valid")
+	def form_valid(self, user_form, vendor_form):
+			self.object = user_form.save()
+			self.object.is_staff=True
+			self.object.save()
+			vendor = vendor_form.save(commit=False)
+			vendor.user = self.object
+			vendor.save()
+			return super(AddVendor, self).form_valid(user_form)
+
+	def form_invalid(self, user_form, vendor_form):
+			return self.render_to_response(self.get_context_data(form1=user_form,form2=vendor_form))
 
 
 #render the category management section that contain the section for managing the category
@@ -104,8 +104,8 @@ class OrderDetails(View):
 
 class UserDetails(View):
     def get(self,request):
-        users = User.objects.all()
+        user = User.objects.all()
         context = {
-            'users' : users
+            'user' : user
         }
         return render(request,'user_details.html',context)

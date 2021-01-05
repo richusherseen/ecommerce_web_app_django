@@ -47,8 +47,8 @@ Manage vendor
                           {% for vendor in vendors %}
                           <tr>
                             <td>{{vendor.id}}</td>
-                            <td>{{vendor.username}}</td>
-                            <td>{{ vendor.shop_name }}</td>
+                            <td>{{vendor.user.username}}</td>
+                            <td>{{ vendor.shope_name }}</td>
                             <td>{{ vendor.address }}</td>
                             <td>{{ vendor.mobile_number }}</td>
                             <td>{{vendor.email}}</td>

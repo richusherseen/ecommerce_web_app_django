@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from master.views import (MasterHome,VendorManagement,
-AddVendor,CategoryManagement,
-AddCategory,OrderDetails,
-UserDetails,VendorUpdate,CategoryUpdate)
+	AddVendor,CategoryManagement,
+	AddCategory,OrderDetails,
+	UserDetails,VendorUpdate,CategoryUpdate)
 
 urlpatterns = [
 	path(r'master/',MasterHome.as_view(),name='master_home'),

@@ -1,14 +1,20 @@
 from django import forms
 from vendor.models import Vendor
 from product.models import CategoryModel
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
+class UserForm(UserCreationForm):
+
+	class Meta:
+		model = User
+		fields = ['first_name','last_name','email','username','password1','password2']
+        
 class VendorForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    
     class Meta:
         model = Vendor
-        fields = ['username','password','confirm_password','shope_name','address','mobile_number','email','image'] 
+        fields = ['shope_name','address','mobile_number','image'] 
         
 
 class CategoryForm(forms.ModelForm):
