@@ -64,6 +64,12 @@ class AddVendor(FormView):
 	def form_invalid(self, user_form, vendor_form):
 			return self.render_to_response(self.get_context_data(form1=user_form,form2=vendor_form))
 
+def delete_vendor(request,vendor_id):
+    vendor=Vendor.objects.get(user=vendor_id)
+   # vendor.delete()
+    print(vendor)
+    return redirect("vendor_mangement")
+
 
 #render the category management section that contain the section for managing the category
 class CategoryManagement(View):
