@@ -46,12 +46,12 @@ Manage vendor
                         <tbody>
                           {% for vendor in vendors %}
                           <tr>
-                            <td>{{vendor.id}}</td>
-                            <td>{{vendor.user.username}}</td>
+                            <td>{{ vendor.id }}</td>
+                            <td>{{ vendor.user.username }}</td>
                             <td>{{ vendor.shope_name }}</td>
                             <td>{{ vendor.address }}</td>
                             <td>{{ vendor.mobile_number }}</td>
-                            <td>{{vendor.email}}</td>
+                            <td>{{ vendor.user.email }}</td>
                             
                             <td><img class="img-thumbnail" src="{{ vendor.imageURL }}" alt="Cinque Terre" style="height: 100px;width: 100px;"></td> 
                             <td><a href="{% url 'vendor_edit' vendor.id %}" class="btn btn-outline-info ">Edit</a>

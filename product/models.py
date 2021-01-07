@@ -1,6 +1,7 @@
 from django.db import models
 from vendor.models import Vendor
 from django.contrib.auth.models import User
+from customer.models import CustomUser
 
 
 class CategoryModel(models.Model):
@@ -38,7 +39,7 @@ class OfferByCategory(models.Model):
     offer_expiry = models.DateField(null=True)
 
 class Order(models.Model):
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL,blank= True, null=True)
+    customer = models.ForeignKey(CustomUser, on_delete=models.SET_NULL,blank= True, null=True)
     product = models.ForeignKey(ProductModel, on_delete=models.SET_NULL, blank = True, null = True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
@@ -57,7 +58,7 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
 class ShippingAdress(models.Model):
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL,blank= True, null=True)
+    customer = models.ForeignKey(CustomUser, on_delete=models.SET_NULL,blank= True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank = True, null = True)
     address = models.CharField(max_length = 200,null = True)
     city = models.CharField(max_length = 200,null = True)
