@@ -3,7 +3,7 @@ from django.views.generic import TemplateView,View,CreateView,ListView
 from customer.models import ContactUs
 from customer.forms import RegisterForm,LoginForm
 from django.contrib.auth.models import User,auth
-
+from django.contrib.auth import login,authenticate,logout
 class HomeView(View):
 	form_class = LoginForm
 	form_class2 = RegisterForm
@@ -23,19 +23,35 @@ class HomeView(View):
 		
 		form2 = self.form_class2(request.POST)
 		if form2.is_valid():
-			
-			user = User.objects.create(username = request.POST.get('username'),password=request.POST.get('password'))
-			
+			password=request.POST.get('password')
+			user = User.objects.create(username = request.POST.get('username'))
+			user.set_password(password)
 			user.save()
 			return redirect('/home')
 		
-		# form = self.form_class(request.POST)
-		# if form.is_valid():
-		# 	username = request.POST.get('username')
-		# 	password = request.POST.get('password')
-		# 	user=auth.authenticate(username=username,password=password)
-		# 	print(user)
-		# 	return redirect('/home')
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+			print('username===',username)
+			print('password====',password)
+			user = auth.authenticate(username=username,password=password)
+			print('user ====',user)
+			if user is not None:
+				print('user is not none')
+				login(request,user)
+				if user.is_superuser:
+					print('super user')
+					return render(request,"admin.html")
+				if user.is_staff:
+					print('staffff')
+					return render(request,'vendor.html')
+				else:
+					print('customer')
+					return render(request,'index.html')
+
+			else:
+				print('not authenticated')
 			
 		
 def contact(request):

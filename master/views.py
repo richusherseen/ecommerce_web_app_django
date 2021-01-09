@@ -35,7 +35,7 @@ class VendorManagement(View):
 
 class VendorUpdate(UpdateView):
     model = Vendor
-    fields = ['username','shope_name','address','mobile_number','email','image']
+    fields = ['shope_name','address','mobile_number','image']
     
     #template_name_suffix = '_update_form'
     success_url ='/vendor_management'
@@ -130,6 +130,6 @@ class UserDetails(View):
     def get(self,request):
         user = User.objects.all()
         context = {
-            'user' : user
+            'users' : user
         }
         return render(request,'user_details.html',context)

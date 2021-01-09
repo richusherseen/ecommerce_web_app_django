@@ -5,7 +5,7 @@ class AddProductForm(forms.ModelForm):
     class Meta:
         model = ProductModel
         
-        exclude = ('image','created_at','updated_at')
+        exclude = ('vendor','created_at','updated_at')
 
 class AddOffer(forms.ModelForm):
     class Meta:
