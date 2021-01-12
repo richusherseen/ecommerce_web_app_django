@@ -19,10 +19,15 @@ class HomeView(View):
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
 		products = ProductModel.objects.all()
-		customer=request.user
-		order, created = Order.objects.get_or_create(customer=customer,complete=False)
-		cartItems=order.get_cart_items
-		print("get",cartItems)
+		if request.user.is_authenticated:
+			customer=request.user
+			order = Order.objects.get(customer=customer)
+			cartItems=order.get_cart_items
+		else:
+			items=[]
+			order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
+			cartItems=order['get_cart_items']
+			print("get",cartItems)
 		print(products)
 		context = {
 			'form':form_class,
@@ -61,10 +66,15 @@ class HomeView(View):
 					return render(request,'vendor.html')
 				else:
 					print('customer')
-					customer=request.user
-					order, created = Order.objects.get_or_create(customer=customer,complete=False)
-					cartItems=order.get_cart_items
-					print("post",cartItems)
+					if request.user.is_authenticated:
+						customer=request.user
+						order, created = Order.objects.get_or_create(customer=customer,complete=False)
+						cartItems=order.get_cart_items
+						print("post",cartItems)
+					else:
+						items=[]
+						order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
+						cartItems=order['get_cart_items']
 					products = ProductModel.objects.all()
 					context = {
 						
