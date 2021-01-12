@@ -19,11 +19,16 @@ class HomeView(View):
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
 		products = ProductModel.objects.all()
+		customer=request.user
+		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		cartItems=order.get_cart_items
+		print("get",cartItems)
 		print(products)
 		context = {
 			'form':form_class,
 			'form2':form_class2,
-			'products':products
+			'products':products,
+			'cartItems':cartItems
 		}
 		return render(request,template_name,context)
 	
@@ -56,10 +61,15 @@ class HomeView(View):
 					return render(request,'vendor.html')
 				else:
 					print('customer')
+					customer=request.user
+					order, created = Order.objects.get_or_create(customer=customer,complete=False)
+					cartItems=order.get_cart_items
+					print("post",cartItems)
 					products = ProductModel.objects.all()
 					context = {
 						
-						'products':products
+						'products':products,
+						'cartItems':cartItems
 					}
 					return render(request,'index.html',context)
 
