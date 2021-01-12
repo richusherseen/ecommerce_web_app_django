@@ -4,18 +4,24 @@ from customer.models import ContactUs
 from customer.forms import RegisterForm,LoginForm
 from django.contrib.auth.models import User,auth
 from django.contrib.auth import login,authenticate,logout
+from product.models import ProductModel
+from django.http import HttpResponse,JsonResponse
 class HomeView(View):
 	form_class = LoginForm
 	form_class2 = RegisterForm
 	model = User
+	
 	def get(self,request):
 		
 		form_class = LoginForm() 
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
+		products = ProductModel.objects.all()
+		print(products)
 		context = {
 			'form':form_class,
-			'form2':form_class2
+			'form2':form_class2,
+			'products':products
 		}
 		return render(request,template_name,context)
 	
@@ -48,12 +54,47 @@ class HomeView(View):
 					return render(request,'vendor.html')
 				else:
 					print('customer')
-					return render(request,'index.html')
+					products = ProductModel.objects.all()
+					context = {
+						
+						'products':products
+					}
+					return render(request,'index.html',context)
 
 			else:
 				print('not authenticated')
-			
-		
+
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print("Action:", action)
+    print("ProductId:", productId)
+
+    customer=request.user.customer
+    product=ProductModel.objects.get(id=productId)
+    vendor=product.vendor
+    print("dealer",vendor)
+    order, created = Order.objects.get_or_create(customer=customer,complete=False)
+    order.customer=vendor
+    order.save()
+    
+    orderItem, created = OrderItem.objects.get_or_create(order=order,product=product)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+
+    orderItem.save()
+
+    if orderItem.quantity <=0:
+        orderItem.delete()
+    
+
+
+    return JsonResponse('Item was added' , safe=False) 
+	
 def contact(request):
 	if request.method == 'POST':
 		name = request.POST['name']
@@ -65,3 +106,5 @@ def contact(request):
 		
 
 	return render(request,'contact us.html')
+
+

@@ -16,6 +16,30 @@
     <link rel="shortcut icon" href="{% static 'images/images/fav-icon.png' %}">
 </head>
 
+	<!-- checking user -->
+	<script type="text/javascript">
+		var user = '{{ request.user }}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		  }
+      var csrftoken = getToken('csrftoken')
+    
+	</script>
+	<!-- checking user -->
+
 <body>
 
     <!----------navigation bar----------->
@@ -86,7 +110,7 @@
 
             <!----right side of the nav bar---->
             <div class="col-md-2 col-2 m-auto right-menu">
-                <a href="#">vendor</a>
+                <a href="#">{{user.username}}</a>
                 <a href="#" class="search">
                     <i class="fas fa-search"></i>
                 </a>
@@ -172,7 +196,7 @@
             </div>
                 <a href="#">
                     <i class="fas fa-shopping-cart">
-                        <span class="num-cart-product">0</span>
+                        <span id="cart-total" class="num-cart-product">{{catItems}}</span>
                     </i>
                 </a>
             </div>
@@ -185,6 +209,7 @@
 
 
     <!------------ Using FontAwesome -------------->
+    <!-- <script src = "{% static 'js/cart.js' %}"></script> -->
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/c8e4d183c2.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
