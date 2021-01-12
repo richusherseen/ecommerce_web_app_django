@@ -47,8 +47,8 @@ class OfferByCategory(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL,blank= True, null=True)
-    
-    
+    vendor_id = models.ForeignKey(Vendor, on_delete=models.SET_NULL,blank= True, null=True)
+    complete = models.BooleanField(default=False, null=True,blank=False)
     date_ordered = models.DateTimeField(auto_now_add=True)
     status_choice= ( 
     ("pending", "pendig"), 

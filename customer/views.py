@@ -4,8 +4,10 @@ from customer.models import ContactUs
 from customer.forms import RegisterForm,LoginForm
 from django.contrib.auth.models import User,auth
 from django.contrib.auth import login,authenticate,logout
-from product.models import ProductModel
+from product.models import *
 from django.http import HttpResponse,JsonResponse
+import json
+
 class HomeView(View):
 	form_class = LoginForm
 	form_class2 = RegisterForm
@@ -66,17 +68,19 @@ class HomeView(View):
 
 def updateItem(request):
     data = json.loads(request.body)
+    print("giufdbgi",data)
     productId = data['productId']
     action = data['action']
     print("Action:", action)
     print("ProductId:", productId)
 
-    customer=request.user.customer
+    customer=request.user
+    print("cud",customer)
     product=ProductModel.objects.get(id=productId)
     vendor=product.vendor
     print("dealer",vendor)
     order, created = Order.objects.get_or_create(customer=customer,complete=False)
-    order.customer=vendor
+    order.vendor_id=vendor
     order.save()
     
     orderItem, created = OrderItem.objects.get_or_create(order=order,product=product)
