@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Crafty</title>
     <link rel="shortcut icon" href="{% static 'images/images/fav-icon.png' %}">
+    {% block custom_css %}{% endblock custom_css %}
 </head>
 
 	<!-- checking user -->
@@ -111,43 +112,81 @@
             <!----right side of the nav bar---->
             <div class="col-md-2 col-2 m-auto right-menu">
                 <a href="#">{{user.username}}</a>
-                <a href="#" class="search">
-                    <i class="fas fa-search"></i>
-                </a>
-                <a href="#" class="user" data-toggle="modal" data-target="#loginpopup">
+                
+                {% if user.is_authenticated %}
+                    <a href="{%url 'profile' %}" class="user">
                     <i class="far fa-user"></i>
                 </a>
-                <!-- Modal -->
-                <div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                
+                {% else %}
+                    <a href="" class="user" data-toggle="modal" data-target="#loginpopup">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong>Log In</strong>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form" >
+                                        <!--login---------->
+                                        <div class="login-form">
+
+                                            <!--inputs-->
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                {{ form.username }}
+                                                {{ form.password }}
+                                                 
+                                                <input type="submit" value="Log In" />
+                                                
+                                            </form>
+                                            <!--forget-and-sign-up-btn-->
+                                            <div class="form-btns">
+                                                <a href="#" class="forget">Forget Your Password?</a>
+                                                <a href="#" class="sign-up-btn" data-toggle="modal" data-target="#signuppopup">Create Account</a>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------signup model------------------->
+                    <div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <strong>Log In</strong>
+                                <strong>Sign Up</strong>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form" >
+                                <div class="form">
                                     <!--login---------->
-                                    <div class="login-form">
+                                    <div class="sign-up-form">
 
                                         <!--inputs-->
-                                        <form method="POST">
+                                        <form method="POST" action="#">
                                             {% csrf_token %}
-                                            {{ form.username }}
-                                            {{ form.password }}
-                                             <!-- <input type="email" name="email" placeholder="Example@gmail.com" required />
-                                            <input type="password" name="password" placeholder="Password" required /> -->
-                                            <input type="submit" value="Log In" />
+                                            {{ form2.username }}
+                                            {{ form2.password }}
+                                            {{ form2.comfirm_password  }}
                                             
+                                            <input type="submit" value="Sign Up" >
                                         </form>
-                                        <!--forget-and-sign-up-btn-->
-                                        <div class="form-btns">
-                                            <a href="#" class="forget">Forget Your Password?</a>
-                                            <a href="#" class="sign-up-btn" data-toggle="modal" data-target="#signuppopup">Create Account</a>
-                                        </div>
+                                        
                                     </div>
 
 
@@ -157,43 +196,7 @@
                         </div>
                     </div>
                 </div>
-                <!-----------------------signup model------------------->
-                <div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <strong>Sign Up</strong>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form">
-                                <!--login---------->
-                                <div class="sign-up-form">
-
-                                    <!--inputs-->
-                                    <form method="POST" action="#">
-                                        {% csrf_token %}
-                                        {{ form2.username }}
-                                        {{ form2.password }}
-                                        {{ form2.comfirm_password  }}
-                                        <!-- <input type="email" name="email" placeholder="Example@gmail.com" required />
-                                        <input type="password" name="password" placeholder="Password" required />
-                                        <input type="password" name="confirm_password" placeholder="re-enter your Password" required /> -->
-                                        <input type="submit" value="Sign Up" >
-                                    </form>
-                                    
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
                 <a href="#">
                     <i class="fas fa-shopping-cart">
                         <span id="cart-total" class="num-cart-product">{{ cartItems }}</span>
