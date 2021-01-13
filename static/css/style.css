@@ -26,8 +26,13 @@ header{
 margin-left: 36px;
 position: fixed;
 top: 23px;
-   
+
 }
+.navbar-hide {
+    pointer-events: none;
+    opacity: 0; 
+}
+
 .right-menu{
     display: flex;
     justify-content: end;
