@@ -49,6 +49,12 @@
                                         <p class="m-b-10 f-w-600">Most Viewed</p>
                                         <h6 class="text-muted f-w-400">Dinoter husainm</h6>
                                     </div> -->
+                                    <div class="col-sm-6">
+                                        <form method="POST" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class='btn btn-danger'>Log Out</button>
+                                        </form> 
+                                    </div>
                                 </div>
                             </div>
                         </div>

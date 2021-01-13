@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <!--------custome css--------->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/cart.css' %}"> -->
     <title>Crafty</title>
     <link rel="shortcut icon" href="{% static 'images/images/fav-icon.png' %}">
     {% block custom_css %}{% endblock custom_css %}
@@ -197,7 +198,7 @@
                     </div>
                 </div>
             {% endif %}
-                <a href="#">
+                <a href="{% url 'cart' %}">
                     <i class="fas fa-shopping-cart">
                         <span id="cart-total" class="num-cart-product">{{ cartItems }}</span>
                     </i>
@@ -212,7 +213,7 @@
 
 
     <!------------ Using FontAwesome -------------->
-    <!-- <script src = "{% static 'js/cart.js' %}"></script> -->
+    <script src = "{% static 'js/cart.js' %}"></script>
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/c8e4d183c2.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

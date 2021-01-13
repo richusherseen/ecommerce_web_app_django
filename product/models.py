@@ -77,6 +77,14 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    @property   
+    def get_total(self):
+        try:
+            total = self.product.price * self.quantity
+        except:
+            total = 0
+        return total
+
 class ShippingAdress(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL,blank= True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank = True, null = True)

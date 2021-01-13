@@ -89,6 +89,7 @@ class HomeView(View):
 
 #function for add to cart
 def updateItem(request):
+	
 	data = json.loads(request.body)
 	print("giufdbgi",data)
 	productId = data['productId']
@@ -108,6 +109,7 @@ def updateItem(request):
 	orderItem, created = OrderItem.objects.get_or_create(order=order,product=product)
 
 	if action == 'add':
+		print("adding")
 		orderItem.quantity = (orderItem.quantity + 1)
 	elif action == 'remove':
 		orderItem.quantity = (orderItem.quantity - 1)
@@ -127,9 +129,9 @@ class ProfieView(View):
 		
 		profiles = Profile.objects.get(user = request.user.id)
 		print('profilesssss',profiles)
-		items=[]
-		order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
-		cartItems=order['get_cart_items']
+		customer=request.user
+		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		cartItems=order.get_cart_items
 
 		context={
 		'cartItems':cartItems,
@@ -166,6 +168,26 @@ class EditProfile(View):
 			p_form.save()
 			
 			return redirect('profile')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+class CartView(View):
+
+	def get(self,request):
+		
+		customer=request.user
+		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		items=order.orderitem_set.all()
+		cartItems=order.get_cart_items
+		context={
+			'cartItems':cartItems,
+			'items':items,
+			'order':order,
+		}
+		return render(request,'cart.html',context)
 
 def contact(request):
 	if request.method == 'POST':
