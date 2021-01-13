@@ -12,8 +12,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <!--------custome css--------->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/cart.css' %}"> -->
     <title>Crafty</title>
     <link rel="shortcut icon" href="{% static 'images/images/fav-icon.png' %}">
+    {% block custom_css %}{% endblock custom_css %}
 </head>
 
 	<!-- checking user -->
@@ -38,7 +40,8 @@
       var csrftoken = getToken('csrftoken')
     
 	</script>
-	<!-- checking user -->
+    <!-- checking user -->
+    
 
 <body>
 
@@ -47,7 +50,7 @@
     <header>
 
         <div class="row nav-row">
-            <nav class="navbar navbar-expand-lg navbar-light">
+            <nav class="navbar navbar-expand-lg navbar-light ">
                 <a class="navbar-brand" href="#">LOGO</a>
                 <button class="navbar-toggler m-auto" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -110,44 +113,83 @@
 
             <!----right side of the nav bar---->
             <div class="col-md-2 col-2 m-auto right-menu">
-                <a href="#">{{user.username}}</a>
-                <a href="#" class="search">
-                    <i class="fas fa-search"></i>
-                </a>
-                <a href="#" class="user" data-toggle="modal" data-target="#loginpopup">
+                {% if user.is_authenticated %}
+                <h5>hi,{{user.username}}</h5>
+                
+                
+                    <a href="{%url 'profile' %}" class="user">
                     <i class="far fa-user"></i>
                 </a>
-                <!-- Modal -->
-                <div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                
+                {% else %}
+                    <a href="" class="user" data-toggle="modal" data-target="#loginpopup">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong>Log In</strong>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form" >
+                                        <!--login---------->
+                                        <div class="login-form">
+
+                                            <!--inputs-->
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                {{ form.username }}
+                                                {{ form.password }}
+                                                 
+                                                <input type="submit" value="Log In" />
+                                                
+                                            </form>
+                                            <!--forget-and-sign-up-btn-->
+                                            <div class="form-btns">
+                                                <a href="#" class="forget">Forget Your Password?</a>
+                                                <a href="#" class="sign-up-btn" data-toggle="modal" data-target="#signuppopup">Create Account</a>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------signup model------------------->
+                    <div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <strong>Log In</strong>
+                                <strong>Sign Up</strong>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form" >
+                                <div class="form">
                                     <!--login---------->
-                                    <div class="login-form">
+                                    <div class="sign-up-form">
 
                                         <!--inputs-->
-                                        <form method="POST">
+                                        <form method="POST" action="#">
                                             {% csrf_token %}
-                                            {{ form.username }}
-                                            {{ form.password }}
-                                             <!-- <input type="email" name="email" placeholder="Example@gmail.com" required />
-                                            <input type="password" name="password" placeholder="Password" required /> -->
-                                            <input type="submit" value="Log In" />
+                                            {{ form2.username }}
+                                            {{ form2.password }}
+                                            {{ form2.comfirm_password  }}
                                             
+                                            <input type="submit" value="Sign Up" >
                                         </form>
-                                        <!--forget-and-sign-up-btn-->
-                                        <div class="form-btns">
-                                            <a href="#" class="forget">Forget Your Password?</a>
-                                            <a href="#" class="sign-up-btn" data-toggle="modal" data-target="#signuppopup">Create Account</a>
-                                        </div>
+                                        
                                     </div>
 
 
@@ -157,48 +199,21 @@
                         </div>
                     </div>
                 </div>
-                <!-----------------------signup model------------------->
-                <div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <strong>Sign Up</strong>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form">
-                                <!--login---------->
-                                <div class="sign-up-form">
-
-                                    <!--inputs-->
-                                    <form method="POST" action="#">
-                                        {% csrf_token %}
-                                        {{ form2.username }}
-                                        {{ form2.password }}
-                                        {{ form2.comfirm_password  }}
-                                        <!-- <input type="email" name="email" placeholder="Example@gmail.com" required />
-                                        <input type="password" name="password" placeholder="Password" required />
-                                        <input type="password" name="confirm_password" placeholder="re-enter your Password" required /> -->
-                                        <input type="submit" value="Sign Up" >
-                                    </form>
-                                    
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <a href="#">
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'cart' %}">
                     <i class="fas fa-shopping-cart">
                         <span id="cart-total" class="num-cart-product">{{ cartItems }}</span>
                     </i>
                 </a>
+            {% else %}
+               
+                <a href="" data-toggle="modal" data-target="#loginpopup">
+                    <i class="fas fa-shopping-cart">
+                        <span id="cart-total" class="num-cart-product">{{ cartItems }}</span>
+                    </i>
+                </a>
+            {% endif %}
             </div>
         </div>
 
@@ -209,7 +224,7 @@
 
 
     <!------------ Using FontAwesome -------------->
-    <!-- <script src = "{% static 'js/cart.js' %}"></script> -->
+    <script src = "{% static 'js/cart.js' %}"></script>
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/c8e4d183c2.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -221,5 +236,31 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script>
+        $(window).scroll(function(e) {
+
+            // add/remove class to navbar when scrolling to hide/show
+            var scroll = $(window).scrollTop();
+            if (scroll >= 150) {
+                $('.navbar').addClass("navbar-hide");
+            } else {
+                $('.navbar').removeClass("navbar-hide");
+            }
+        
+        });
+    </script>
+    <script>
+        $(window).scroll(function(e) {
+
+            // add/remove class to navbar when scrolling to hide/show
+            var scroll = $(window).scrollTop();
+            if (scroll >= 150) {
+                $('.right-menu').addClass("navbar-hide");
+            } else {
+                $('.right-menu').removeClass("navbar-hide");
+            }
+        
+        });
+    </script>
     </body>
     </html>

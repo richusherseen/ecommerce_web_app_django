@@ -16,6 +16,9 @@ class ContactUs(models.Model):
 class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100,null=True)
+    email = models.EmailField(null=True)
+    phone = models.IntegerField(null=True)
     image = models.ImageField(default = 'default.jpg',upload_to='profile_pics')
     address = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -24,6 +27,14 @@ class Profile(models.Model):
     def __str__(self):
 
         return  self.user.username
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
     
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
