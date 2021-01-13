@@ -54,7 +54,8 @@ Manage product
                             <td><a href="{% url 'product_edit' product.id %}" class="btn btn-outline-info ">Edit</a>
                               <form action="{% url 'delete_product' product.id %}" method="POST" onsubmit="window.ondelete()" style="display: inline;" id="hi">
                                 {% csrf_token %}
-                              <button type="submit" class="btn btn-danger">Delete</button></form></td>
+                              <button type="submit" class="btn btn-danger">Delete</button></form>
+                              <a href="{% url 'add_offer' product.id %}" class="btn btn-outline-primary ">Offer</a></td>
                               <!-- <a class="confirm-delete btn btn-outline-danger" href="/delete_category/{{ category.id }}" >Delete</a> -->
                               {% block custom_js %}
                               <script type="text/Javascript">

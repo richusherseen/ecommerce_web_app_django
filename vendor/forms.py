@@ -10,7 +10,8 @@ class AddProductForm(forms.ModelForm):
 class AddOffer(forms.ModelForm):
     class Meta:
         model = Offer
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('vendor','product','offer_start','offer_expiry')
 
 class AddOfferByCategory(forms.ModelForm):
     class Meta:

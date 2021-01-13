@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import View,UpdateView
+from django.views.generic import View,UpdateView,CreateView
 from vendor.forms import AddProductForm,AddOffer,AddOfferByCategory
 from product.models import *
 from vendor.models import Vendor
@@ -68,8 +68,8 @@ class OfferByProduct(View):
 class AddOfferView(View):
     template_name = 'add_offer.html'
     form_class = AddOffer
-    
-    def get(self,request):
+    # success_url = ('/product_management') 
+    def get(self,request,pk):
 
         form = self.form_class()
         context = {
@@ -78,6 +78,46 @@ class AddOfferView(View):
         }
         return render(request,self.template_name,context)
 
+
+    def post(self,request,pk):
+        form = self.form_class(request.POST)
+        p_id = self.kwargs['pk']
+
+        product_obj=ProductModel.objects.get(id=p_id)
+        offer_name=request.POST.get('offer_name')
+        discount_amount=request.POST.get('discount_amount')
+        user=request.user.id
+
+        # print("product",product)
+        # print("offer_name",offer_name)
+        # print("discount_amount",discount_amount)
+        # print(p_id)
+        vendor=Vendor.objects.get(user=user)
+        ofer_exist=Offer.objects.filter(product=product_obj,vendor=vendor).exists()
+
+        if ofer_exist:
+            price=product_obj.offer_price
+            discount_amounts= int(discount_amount)
+            offers_price=price-(int(price)*(discount_amounts/100))
+
+            offer = Offer.objects.get(product=product_obj,vendor=vendor)
+            offer.discount_amount=discount_amount
+            offer.offer_name=offer_name
+            offer.save()
+            product_obj.price=offers_price
+            product_obj.save()
+            
+        else:
+            offers=Offer.objects.create(offer_name=offer_name,discount_amount=discount_amount,product=product_obj,vendor=vendor)
+            # offers.save()
+            price=product_obj.price
+            product_obj.offer_price=price
+            discount_amounts= int(discount_amount)
+            offer_price=price-(int(price)*(discount_amounts/100))
+            product_obj.price=offer_price
+            product_obj.save()
+
+        return redirect('/product_management')
 class OfferByCategoryView(View):
     def get(self,request):
         return render(request,'offer_by_category.html')
@@ -97,3 +137,5 @@ class AddOfferByCategoryView(View):
 class OrderDetailsView(View):
     def get(self, request):
         return render(request,'vendor_order_details.html')
+
+

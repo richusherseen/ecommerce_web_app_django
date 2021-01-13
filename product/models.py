@@ -17,6 +17,7 @@ class ProductModel(models.Model):
     product_category = models.ForeignKey(CategoryModel,on_delete=models.CASCADE)
     image = models.ImageField(upload_to='media/product/')
     price = models.IntegerField(null=True,blank=True,default=0)
+    offer_price = models.FloatField(null=True)
     quantity = models.IntegerField(default=0,null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -32,10 +33,11 @@ class ProductModel(models.Model):
         return url
 
 class Offer(models.Model):
-    offer_type = {('Price Offer','Price Offer'),('Percentage Offer','Percentage Offer')}
-    offer_type = models.CharField(default='Price Offer',max_length= 220,choices=offer_type)
+    offer_name = models.CharField(max_length= 220, null=True)
     product = models.ForeignKey(ProductModel,on_delete=models.CASCADE,null=True)
-    offer = models.FloatField(null=True)
+    vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE,null=True)
+    discount_amount = models.FloatField(null=True)
+    offer_start = models.DateField(auto_now_add=True, null=True)
     offer_expiry = models.DateField(null=True)
 
 class OfferByCategory(models.Model):
