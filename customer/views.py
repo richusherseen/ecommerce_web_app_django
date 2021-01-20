@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,View,CreateView,ListView
 from customer.models import ContactUs
-from customer.forms import RegisterForm,LoginForm,UserUpdateForm,ProfileUpdateForm
+from customer.forms import RegisterForm,LoginForm,UserUpdateForm,ProfileUpdateForm,CheckOutForm
 from django.contrib.auth.models import User,auth
 from django.contrib.auth import login,authenticate,logout
 from product.models import *
 from .models import Profile
 from django.http import HttpResponse,JsonResponse
 import json
+
 
 class HomeView(View):
 	form_class = LoginForm
@@ -29,7 +30,7 @@ class HomeView(View):
 			order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
 			cartItems=order['get_cart_items']
 			print("get",cartItems)
-		print(products)
+		
 		context = {
 			'form':form_class,
 			'form2':form_class2,
@@ -202,3 +203,11 @@ def contact(request):
 	return render(request,'contact us.html')
 
 
+class CheckOutView(View):
+	form_class = CheckOutForm
+	def get(self,request):
+		form_class=CheckOutForm()
+		context = {
+			'form':form_class
+		}
+		return render(request,'checkout.html',context)

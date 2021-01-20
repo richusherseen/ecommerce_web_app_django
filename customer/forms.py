@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
+from product.models import ShippingAdress
 class LoginForm(forms.Form):
     
     username = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'User Name','class' : 'login-form'}))
@@ -27,3 +28,8 @@ class ProfileUpdateForm(forms.ModelForm):
 
         model = Profile
         fields = ['image','name','email','phone','address']
+
+class CheckOutForm(forms.ModelForm):
+    class Meta:
+        model = ShippingAdress
+        fields = ['address','city','state','zipcode']
