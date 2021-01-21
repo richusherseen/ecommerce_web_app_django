@@ -13,7 +13,7 @@
 
             <form id="form" >
                 
-                <!-- <div id="user-info" >
+                <div id="user-info" >
                     <div class="form-field">
                         <input required class="form-control" type="text" name="name" placeholder="Name..">
                     </div>
@@ -21,7 +21,7 @@
                         <input required class="form-control" type="email" name="email" placeholder="Email..">
                     </div>
 
-                </div> -->
+                </div>
 
                 <div id="shipping-info" >
                     <hr>
@@ -109,44 +109,44 @@
 	{% endif %}
     </div>
 
-<!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    
-    var options = { -->
-        <!-- "key": "rzp_test_Lt91WAzqz5raTU", // Enter the Key ID generated from the Dashboard
-        "amount": "{{order.get_cart_total|floatformat:2}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        "currency": "USD",
-        "name": "Acme Corp",
-        "description": "Test Transaction",
-        "image": "https://example.com/your_logo",
-        "order_id": '{{order_id}}', //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response){
-            /*alert(response.razorpay_payment_id);
-            alert(response.razorpay_order_id);
-            alert(response.razorpay_signature)*/
-            submitFormData()
-        },
-        
-        "prefill": {
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var tot = '{{ order.get_cart_total }}'*100
+        var options = {
+            "key": "rzp_test_ry2ABVXMoh1vQu", // Enter the Key ID generated from the Dashboard
+            "amount": tot, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "USD",
+            "name": "Acme Corp",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": '{{order_id}}', //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response){
+                /*alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)*/
+                submitFormData()
+            },
             
-            "name": "{{user.username}}",
-            "email": "{{user.email}}",
-            "contact": "{{user.last_name}}"
-        },
-        "notes": {
-            "address": "Razorpay Corporate Office"
-        },
-        "theme": {
-            "color": "#F37254"
+            "prefill": {
+                
+                "name": "{{user.username}}",
+                "email": "{{user.email}}",
+                "contact": "{{user.last_name}}"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
         }
-    };
-    var rzp1 = new Razorpay(options);
-    document.getElementById('rzp-button1').onclick = function(e){
-        rzp1.open();
-        e.preventDefault();
-    }
-    
-</script> -->
+        
+    </script>
 
 <!-- <script src="https://www.paypal.com/sdk/js?client-id=AVyZltpqzUgb0ZPvZeWbVEXPd1jcveuX4VBGIWhI2czp-gJi4S4FLgxDyY1kmtCFhqE5PkGWHdb0WUoS&currency=USD"></script>
 
@@ -192,7 +192,7 @@
     }).render('#paypal-button-container');
 </script> -->
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     var shipping = '{{ order.shipping }}'
     var total = '{{ order.get_cart_total}}'
     if (shipping == 'False'){
@@ -255,7 +255,7 @@
 
         }
 
-        var url = '/process_order/'
+        var url = '/process_order'
         fetch(url,{
             method:'POST',
             headers:{
@@ -268,11 +268,11 @@
         .then((data) => {
             console.log('Success' ,data);
             alert("Transaction completed");
-            window.location.href="#"
+            window.location.href="{% url 'home_page' %}"
         })
 
     }
-</script> -->
+</script>
 
 
 <!-- 

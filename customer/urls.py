@@ -12,5 +12,7 @@ urlpatterns = [
 	path('logout/',views.logout_view,name='logout'),
 	path(r'cart/',CartView.as_view(),name='cart'),
 	path(r'checkout/',CheckOutView.as_view(),name='checkout'),
+	path('process_order',views.processOrder,name='process_order'),
+
 ]
 

@@ -8,6 +8,7 @@ from product.models import *
 from .models import Profile
 from django.http import HttpResponse,JsonResponse
 import json
+import datetime
 
 
 class HomeView(View):
@@ -23,7 +24,7 @@ class HomeView(View):
 		products = ProductModel.objects.all()
 		if request.user.is_authenticated:
 			customer=request.user
-			order = Order.objects.get(customer=customer)
+			order, created = Order.objects.get_or_create(customer=customer,complete=False)
 			cartItems=order.get_cart_items
 		else:
 			items=[]
@@ -207,7 +208,44 @@ class CheckOutView(View):
 	form_class = CheckOutForm
 	def get(self,request):
 		form_class=CheckOutForm()
-		context = {
+		customer=request.user
+		order, created = Order.objects.get_or_create(customer=customer,complete=False)
+		items=order.orderitem_set.all()
+		cartItems=order.get_cart_items
+		context={
+			'cartItems':cartItems,
+			'items':items,
+			'order':order,
 			'form':form_class
 		}
 		return render(request,'checkout.html',context)
+
+
+def processOrder(request):
+    print("Data",request.body)
+    transaction_id=datetime.datetime.now().timestamp()
+    data =json.loads(request.body)
+    if request.user.is_authenticated:
+        customer=request.user
+        order, created = Order.objects.get_or_create(customer=customer,complete=False)
+        total= float(data['form']['total'])
+        order.transaction_id = transaction_id
+
+        if total == order.get_cart_total:
+            order.complete = True
+        order.save()
+        print(order.shipping)
+        if order.shipping == True:
+            ShippingAdress.objects.create(
+                customer=customer,
+                order=order,
+                address=data['shipping']['address'],
+                city=data['shipping']['city'],
+                state=data['shipping']['state'],
+                zipcode=data['shipping']['zipcode'],
+            )
+            # print(ShippingAdress.address)
+
+    else:
+        print("user is not loged in")
+    return JsonResponse('Payment complete' , safe=False) 

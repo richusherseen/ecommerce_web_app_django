@@ -59,6 +59,14 @@ class Order(models.Model):
    )
 
     order_status = models.CharField(max_length = 200,choices=status_choice,default = 'Pending')
+
+    @property
+    def shipping(self): 
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            shipping = True
+        return shipping
     
     @property
     def get_cart_total(self):
