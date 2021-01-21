@@ -44,6 +44,11 @@ top: 23px;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1px;
+    width: 157px;
+text-align: center;
+}
+.navbar-nav{
+    margin-left: 271px;
 }
 .navbar-light .navbar-nav .nav-link {
     color: black;

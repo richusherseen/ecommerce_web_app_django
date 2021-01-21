@@ -87,6 +87,8 @@ def delete_vendor(request,vendor_id):
 class CategoryManagement(View):
     def get(self,request):
         categories = CategoryModel.objects.all()
+    
+        
         context = {
             'categories': categories
         }
@@ -94,7 +96,7 @@ class CategoryManagement(View):
 
 class CategoryUpdate(UpdateView):
     model = CategoryModel
-    fields = ['category_name']
+    fields = ['category_name','image']
     success_url='/category_management'
 
 class AddCategory(View):
@@ -109,10 +111,12 @@ class AddCategory(View):
         return render(request,self.template_name,context)
     
     def post(self,request):
-        form = self.form_class(request.POST)
+        form = self.form_class(self.request.POST,self.request.FILES)
         if form.is_valid():
             category=request.POST.get('category_name')
-            category = CategoryModel.objects.create(category_name=category)
+            image = request.FILES.get('image')
+            print('img',image)
+            category = CategoryModel.objects.create(category_name=category,image=image)
             return redirect('category_management')
 
 

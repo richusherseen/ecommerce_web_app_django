@@ -22,6 +22,7 @@ class HomeView(View):
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
 		products = ProductModel.objects.all()
+		categories = CategoryModel.objects.all()
 		if request.user.is_authenticated:
 			customer=request.user
 			order, created = Order.objects.get_or_create(customer=customer,complete=False)
@@ -36,7 +37,8 @@ class HomeView(View):
 			'form':form_class,
 			'form2':form_class2,
 			'products':products,
-			'cartItems':cartItems
+			'cartItems':cartItems,
+			'categories':categories
 		}
 		return render(request,template_name,context)
 	
@@ -212,12 +214,15 @@ class CheckOutView(View):
 		order, created = Order.objects.get_or_create(customer=customer,complete=False)
 		items=order.orderitem_set.all()
 		cartItems=order.get_cart_items
+		
 		context={
+			
 			'cartItems':cartItems,
 			'items':items,
 			'order':order,
 			'form':form_class
 		}
+		
 		return render(request,'checkout.html',context)
 
 

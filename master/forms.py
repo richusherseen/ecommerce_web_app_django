@@ -20,7 +20,7 @@ class VendorForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = CategoryModel
-        fields = ['category_name']
+        fields = ['category_name','image']
 
 
 class LoginForm(forms.Form):

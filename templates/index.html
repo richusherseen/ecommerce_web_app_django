@@ -46,50 +46,55 @@
             </div>
 
             <!--box-1--------------------->
+            {% for category in categories %}
             <li class="item">
+                
                 <div class="feature-box">
+                    
                     <a href="#">
-                        <img src="/static/images/card slider/feature_4.jpg">
+                        <img src="{{ category.imageURL }}">
                     </a>
                 </div>
-                <span>Living Room Decor</span>
+                <span>{{ category.category_name }}</span>
+                
             </li>
+            {% endfor %}
             <!--box-2--------------------->
-            <li class="item">
+            <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_5.jpg">
                     </a>
                 </div>
                 <span>Garden Decor</span>
-            </li>
+            </li> -->
             <!--box-3--------------------->
-            <li class="item">
+            <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_3.jpg">
                     </a>
                 </div>
                 <span>Ladies Pouch</span>
-            </li>
+            </li> -->
             <!--box-4--------------------->
-            <li class="item">
+            <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_1.jpg">
                     </a>
                 </div>
                 <span>Collectible Decor</span>
-            </li>
+            </li> -->
             <!--box-5--------------------->
-            <li class="item">
+            <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_2.jpg">
                     </a>
                 </div>
                 <span>Gifts</span>
-            </li>
+            </li> -->
 
 
         </ul>
@@ -119,7 +124,7 @@
                                             <!--overlayer---------->
                                             <div class="overlay">
                                                 <!--buy-btn------>
-                                                <button class="buy-btn add-btn update-cart" data-action = "add" type = "button" data-product = "{{ product.id }}">Add to cart</button>
+                                                <a class="buy-btn add-btn update-cart" data-action = "add" type = "button" data-product = "{{ product.id }}">Add to cart</a>
                                             </div>
                                         </div>
                                         <!--detail-box--------->

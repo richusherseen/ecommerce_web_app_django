@@ -88,23 +88,24 @@
 <div class="col-md-4" id="select">
     {% if user.is_authenticated %}
         <div>
-            <div class="section-title">
+            <!-- <div class="section-title">
                 <h3 class="title">Select address</h3>
             </div>
-            {% for shi in shipping %}
+            
                 <div class="col-md-4">
                     <div class="card text-center card-product"
                         style="background-color:rgba(0, 0, 255, 0.1);; color: black;">
                         <div class="card-body" style="color: black;">
+                            
                             <h6 id="addd1" data-mo="{{shi.address}}" style="padding-top: 20px;">{{shi.address}}</h6>
-                            <p id="addd2">{{shi.city}}</p>
+                            <!-- <p id="addd2">{{shi.city}}</p>
                             <p id="addd3">{{shi.state}}</p>
-                            <p id="addd4">{{shi.zipcode}}</p>
-                            <input id="myCheck" name="{{shi.id}}" type="checkbox">
+                            <p id="addd4">{{shi.zipcode}}</p> -->
+                            <!-- <input id="myCheck" name="{{shi.id}}" type="checkbox">
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                </div> -->
+            
         </div>
 	{% endif %}
     </div>
@@ -148,49 +149,6 @@
         
     </script>
 
-<!-- <script src="https://www.paypal.com/sdk/js?client-id=AVyZltpqzUgb0ZPvZeWbVEXPd1jcveuX4VBGIWhI2czp-gJi4S4FLgxDyY1kmtCFhqE5PkGWHdb0WUoS&currency=USD"></script>
-
-<script>
-    var change = document.querySelector("#entry-title")
-	var payment_paypal='paypal'
-	if(change){
-		change.textContent > 0
-        totalss = ('{{ order.get_cart_total}}')*(90/100)
-    }
-    else{
-        totalss = '{{ order.get_cart_total}}'
-    }
-
-    // Render the PayPal button into #paypal-button-container
-    paypal.Buttons({
-
-        style:{
-            color:'blue',
-            shape:'rect'
-        },
-
-        // Set up the transaction
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: parseFloat(totalss).toFixed(2)
-                    }
-                }]
-            });
-        },
-
-        // Finalize the transaction
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                submitFormData()
-
-            });
-        }
-
-
-    }).render('#paypal-button-container');
-</script> -->
 
 <script type="text/javascript">
     var shipping = '{{ order.shipping }}'
