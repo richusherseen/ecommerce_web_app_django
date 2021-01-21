@@ -249,3 +249,26 @@ def processOrder(request):
     else:
         print("user is not loged in")
     return JsonResponse('Payment complete' , safe=False) 
+
+
+class OrderListView(View):
+
+    def get(self,request):
+        customer=request.user
+        # print(customer)
+        order=Order.objects.filter(customer=customer,complete=True)
+        items =[]
+        for i in order:
+            details=OrderItem.objects.filter(order=i,product__isnull=False)
+            for j in details:
+                items.append(j)
+
+        context ={
+			"items":items,
+			"order":order,
+			# "cartItems":cartItems,
+
+    	}
+
+
+        return render(request,'order_view.html',context)
