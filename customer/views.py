@@ -22,12 +22,14 @@ class HomeView(View):
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
 		products = ProductModel.objects.all()
-		categories = CategoryModel.objects.all()
+		# categories = CategoryModel.objects.all()
 		if request.user.is_authenticated:
+			categories = CategoryModel.objects.all()
 			customer=request.user
 			order, created = Order.objects.get_or_create(customer=customer,complete=False)
 			cartItems=order.get_cart_items
 		else:
+			categories = CategoryModel.objects.all()
 			items=[]
 			order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
 			cartItems=order['get_cart_items']
@@ -277,3 +279,21 @@ class OrderListView(View):
 
 
         return render(request,'order_view.html',context)
+
+def product_list_based_on_category(request):
+	if request.user.is_authenticated:
+			customer=request.user
+			order, created = Order.objects.get_or_create(customer=customer,complete=False)
+			cartItems=order.get_cart_items
+	else:
+		items=[]
+		order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
+		cartItems=order['get_cart_items']
+		print("get",cartItems)
+	
+	context = {
+		
+		'cartItems':cartItems,
+		
+	}
+	return render(request,'category_based_list.html',context)

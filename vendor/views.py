@@ -6,6 +6,7 @@ from vendor.models import Vendor
 
 class VendorHome(View):
     def get(self, request):
+        
         return render(request,'vendor.html')
 
 class ProductManagement(View):

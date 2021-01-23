@@ -44,21 +44,36 @@
             <div class="feature-heading">
                 <h2>featured categories</h2>
             </div>
-
+            {% if user.is_authenticated %}
             <!--box-1--------------------->
-            {% for category in categories %}
-            <li class="item">
-                
-                <div class="feature-box">
+                {% for category in categories %}
+                <li class="item">
                     
-                    <a href="#">
-                        <img src="{{ category.imageURL }}">
-                    </a>
-                </div>
-                <span>{{ category.category_name }}</span>
-                
-            </li>
-            {% endfor %}
+                    <div class="feature-box">
+                        
+                        <a href="{% url 'product_list_based_on_category' %}">
+                            <img src="{{ category.imageURL }}">
+                        </a>
+                    </div>
+                    <span>{{ category.category_name }}</span>
+                    
+                </li>
+                {% endfor %}
+            {% else %}
+                {% for category in categories %}
+                <li class="item">
+                    
+                    <div class="feature-box">
+                        
+                        <a href="{% url 'product_list_based_on_category' %}">
+                            <img src="{{ category.imageURL }}">
+                        </a>
+                    </div>
+                    <span>{{ category.category_name }}</span>
+                    
+                </li>
+                {% endfor %}
+            {% endif %}
             <!--box-2--------------------->
             <!-- <li class="item">
                 <div class="feature-box">

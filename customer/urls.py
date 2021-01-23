@@ -13,7 +13,8 @@ urlpatterns = [
 	path(r'cart/',CartView.as_view(),name='cart'),
 	path(r'checkout/',CheckOutView.as_view(),name='checkout'),
 	path('process_order',views.processOrder,name='process_order'),
-	path('view_orders',OrderListView.as_view(),name="view_orders")
+	path('view_orders',OrderListView.as_view(),name="view_orders"),
+	path('product_list_based_on_category/',views.product_list_based_on_category,name='product_list_based_on_category'),
 
 ]
 

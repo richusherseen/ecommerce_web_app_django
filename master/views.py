@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import View,UpdateView,FormView
 from master.forms import VendorForm,CategoryForm,UserForm,LoginForm
 from vendor.models import Vendor
-from product.models import CategoryModel
+from product.models import CategoryModel,OrderItem
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 # render the admin dashboard  
@@ -21,7 +21,17 @@ class LoginView(View):
 
 class MasterHome(View):
     def get(self, request):
-        return render(request,'admin.html')
+        vendor = Vendor.objects.all().count()
+        total_customers = User.objects.all().count()
+        total_oders = OrderItem.objects.all().count()
+        # print('count',vendor)
+        context = {
+            'vendor':vendor,
+            'total_customers':total_customers,
+            'total_oders' : total_oders
+
+        }
+        return render(request,'admin.html',context)
 
 # render the vendor management section that contain the section for managing the vendor
 class VendorManagement(View):
@@ -128,7 +138,11 @@ def delete_category(request,category_id):
 
 class OrderDetails(View):
     def get(self,request):
-        return render(request,'order_details.html')
+        items = OrderItem.objects.all()
+        context={
+            'items':items
+        }
+        return render(request,'order_details.html',context)
 
 class UserDetails(View):
     def get(self,request):
