@@ -1,81 +1,137 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+    .footer {
+        background:black;
+        opacity:.9;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        font-size:2rem;
+        height:24rem;
+        padding-left: 6rem;
+    }
+    .social-buttons{
+        width: 59rem;
+        margin-top: -6rem;
+        margin-left: 21rem;
+    }
 
-    <!-------------------------------------------- image slider ------------------------------------------------->
-    <section id="image-slider">
+
+    .social-buttons a {
+        display: inline-flex;
+        text-decoration: none;
+        font-size: 18px;
+        width: 60px;
+        height: 60px;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin: 0 8px;
+    }
+
+    .social-buttons a::before {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(45deg, #22a6b3, #30336b);
+        border-radius: 50%;
+        z-index: -1;
+        transition: 0.3s ease-in;
+    }
+
+    .social-buttons a:hover::before {
+        transform: scale(0);
+    }
+
+    .social-buttons a i {
+        transition: 0.3s ease-in;
+    }
+
+    .social-buttons a:hover i {
+        background: linear-gradient(45deg, #22a6b3, #30336b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transform: scale(2.2);
+    }
+</style>
+<!-------------------------------------------- image slider ------------------------------------------------->
+<section id="image-slider">
 
 
 
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="/static/images/slideshow/Slider_02.jpg" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="/static/images/slideshow/Slider_03.jpg" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="/static/images/slideshow/Slider_04.jpg" alt="Third slide">
-                </div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="/static/images/slideshow/Slider_02.jpg" alt="First slide">
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/static/images/slideshow/Slider_03.jpg" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/static/images/slideshow/Slider_04.jpg" alt="Third slide">
+            </div>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
 
-    </section>
+</section>
 
-    <!----------------------------------featured section-------------------------------------------->
+<!----------------------------------featured section-------------------------------------------->
 
-    <section id="featured-section">
+<section id="featured-section">
 
 
 
-        <!--product-categories-slider---------------------->
-        <ul class="container">
+    <!--product-categories-slider---------------------->
+    <ul class="container">
 
-            <div class="feature-heading">
-                <h2>featured categories</h2>
+        <div class="feature-heading">
+            <h2>featured categories</h2>
+        </div>
+        {% if user.is_authenticated %}
+        <!--box-1--------------------->
+        {% for category in categories %}
+        <li class="item">
+
+            <div class="feature-box">
+
+                <a href="{% url 'product_list_based_on_category' %}">
+                    <img src="{{ category.imageURL }}">
+                </a>
             </div>
-            {% if user.is_authenticated %}
-            <!--box-1--------------------->
-                {% for category in categories %}
-                <li class="item">
-                    
-                    <div class="feature-box">
-                        
-                        <a href="{% url 'product_list_based_on_category' %}">
-                            <img src="{{ category.imageURL }}">
-                        </a>
-                    </div>
-                    <span>{{ category.category_name }}</span>
-                    
-                </li>
-                {% endfor %}
-            {% else %}
-                {% for category in categories %}
-                <li class="item">
-                    
-                    <div class="feature-box">
-                        
-                        <a href="{% url 'product_list_based_on_category' %}">
-                            <img src="{{ category.imageURL }}">
-                        </a>
-                    </div>
-                    <span>{{ category.category_name }}</span>
-                    
-                </li>
-                {% endfor %}
-            {% endif %}
-            <!--box-2--------------------->
-            <!-- <li class="item">
+            <span>{{ category.category_name }}</span>
+
+        </li>
+        {% endfor %}
+        {% else %}
+        {% for category in categories %}
+        <li class="item">
+
+            <div class="feature-box">
+
+                <a href="{% url 'product_list_based_on_category' %}">
+                    <img src="{{ category.imageURL }}">
+                </a>
+            </div>
+            <span>{{ category.category_name }}</span>
+
+        </li>
+        {% endfor %}
+        {% endif %}
+        <!--box-2--------------------->
+        <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_5.jpg">
@@ -83,8 +139,8 @@
                 </div>
                 <span>Garden Decor</span>
             </li> -->
-            <!--box-3--------------------->
-            <!-- <li class="item">
+        <!--box-3--------------------->
+        <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_3.jpg">
@@ -92,8 +148,8 @@
                 </div>
                 <span>Ladies Pouch</span>
             </li> -->
-            <!--box-4--------------------->
-            <!-- <li class="item">
+        <!--box-4--------------------->
+        <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_1.jpg">
@@ -101,8 +157,8 @@
                 </div>
                 <span>Collectible Decor</span>
             </li> -->
-            <!--box-5--------------------->
-            <!-- <li class="item">
+        <!--box-5--------------------->
+        <!-- <li class="item">
                 <div class="feature-box">
                     <a href="#">
                         <img src="/static/images/card slider/feature_2.jpg">
@@ -112,60 +168,84 @@
             </li> -->
 
 
-        </ul>
+    </ul>
 
-    </section>
+</section>
 
-    <!--------------------------------------------sliding offers-------------------------------------------->
+<!--------------------------------------------sliding offers-------------------------------------------->
 
-    <section id="sliding-offers">
+<section id="sliding-offers">
 
-        <div class="feature-heading">
-            <h2>offer of the week</h2>
-        </div>
-        
-        
-                    <div class="row">
-                        {% for product in products %}
-                        <div class="col-md-4">
-                            <ul id="autoWidth" class="cs-hidden">
-                                <!--1------------------------------------>
-                                <li class="item-a">
-                                    <!--box-slider--------------->
-                                    <div class="box">
-                                        <!--img-box---------->
-                                        <div class="slide-img">
-                                            <img alt="1" src="{{ product.imageURL }}">
-                                            <!--overlayer---------->
-                                            <div class="overlay">
-                                                <!--buy-btn------>
-                                                <a class="buy-btn add-btn update-cart" data-action = "add" type = "button" data-product = "{{ product.id }}">Add to cart</a>
-                                            </div>
-                                        </div>
-                                        <!--detail-box--------->
-                                        <div class="detail-box">
-                                            <!--type-------->
-                                            <div class="type">
-                                                <a href="#">{{ product.product_name }}</a>
-                                                <span>Pack of {{ product.quantity }}</span>
-                                            </div>
-                                            <!--price-------->
-                                            <a href="#" class="price">${{ product.price }}</a>
+    <div class="feature-heading">
+        <h2>offer of the week</h2>
+    </div>
 
-                                        </div>
 
-                                    </div>
-                                </li>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <ul id="autoWidth" class="cs-hidden">
+                <!--1------------------------------------>
+                <li class="item-a">
+                    <!--box-slider--------------->
+                    <div class="box">
+                        <!--img-box---------->
+                        <div class="slide-img">
+                            <img alt="1" src="{{ product.imageURL }}">
+                            <!--overlayer---------->
+                            <div class="overlay">
+                                <!--buy-btn------>
+                                <a class="buy-btn add-btn update-cart" data-action="add" type="button"
+                                    data-product="{{ product.id }}">Add to cart</a>
+                            </div>
                         </div>
-                        {% endfor %}
-                       
+                        <!--detail-box--------->
+                        <div class="detail-box">
+                            <!--type-------->
+                            <div class="type">
+                                <a href="#">{{ product.product_name }}</a>
+                                <span>Pack of {{ product.quantity }}</span>
+                            </div>
+                            <!--price-------->
+                            <a href="#" class="price">${{ product.price }}</a>
+
+                        </div>
+
                     </div>
+                </li>
+        </div>
+        {% endfor %}
 
-                
+    </div>
 
-    </section>
 
-    <!-- <script >
+
+</section>
+
+    <div class="footer">
+    <div class="row">
+
+
+        <div class='heading' style='width:50rem;margin-left:17rem'>
+            <h2>Get your Groceries delivered from Crafty</h2>
+            <p>Free Delivery on your first order!</p>
+        </div>
+    </div>
+    <div class="row">
+    <div class="social-buttons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+</div>
+</div>
+
+
+
+
+<!-- <script >
        
     </script> -->
 
