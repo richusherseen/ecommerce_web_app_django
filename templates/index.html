@@ -107,7 +107,7 @@
 
             <div class="feature-box">
 
-                <a href="{% url 'product_list_based_on_category' %}">
+                <a href="{% url 'product_list_based_on_category' category.id %}">
                     <img src="{{ category.imageURL }}">
                 </a>
             </div>
@@ -121,7 +121,7 @@
 
             <div class="feature-box">
 
-                <a href="{% url 'product_list_based_on_category' %}">
+                <a href="{% url 'product_list_based_on_category' category.id %}">
                     <img src="{{ category.imageURL }}">
                 </a>
             </div>

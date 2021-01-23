@@ -92,6 +92,7 @@ class HomeView(View):
 
 			else:
 				print('not authenticated')
+				return redirect('home_page')
 
 #function for add to cart
 def updateItem(request):
@@ -280,19 +281,22 @@ class OrderListView(View):
 
         return render(request,'order_view.html',context)
 
-def product_list_based_on_category(request):
+def product_list_based_on_category(request,category_id):
 	if request.user.is_authenticated:
+			product_cate = ProductModel.objects.filter(product_category = category_id)
 			customer=request.user
 			order, created = Order.objects.get_or_create(customer=customer,complete=False)
 			cartItems=order.get_cart_items
+			
 	else:
+		product_cate = ProductModel.objects.filter(product_category = category_id)
 		items=[]
 		order ={'get_cart_total':0,'get_cart_items':0,'shipping':False}
 		cartItems=order['get_cart_items']
 		print("get",cartItems)
 	
 	context = {
-		
+		'product_cate':product_cate,
 		'cartItems':cartItems,
 		
 	}

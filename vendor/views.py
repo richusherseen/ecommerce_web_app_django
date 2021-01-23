@@ -2,12 +2,37 @@ from django.shortcuts import render,redirect
 from django.views.generic import View,UpdateView,CreateView
 from vendor.forms import AddProductForm,AddOffer,AddOfferByCategory
 from product.models import *
+from customer.models import Profile
 from vendor.models import Vendor
 
 class VendorHome(View):
     def get(self, request):
+        user=request.user.id
+        dealer=Vendor.objects.get(user=user)
+        products=ProductModel.objects.filter(vendor=dealer).count()
+        order_count=Order.objects.filter(vendor_id=dealer).count()
+
+        customer_count=Profile.objects.all().count()
+
+        # total price counting
+        orders=Order.objects.filter(vendor_id=dealer)
+        total = 0
+        for order in orders:
+            try:
+                order_total=order.get_cart_total
+            except:
+                order_total=0
+            total=total+order_total
+
+
         
-        return render(request,'vendor.html')
+        context = {
+            'products':products,
+            'order_count':order_count,
+            'customer_count':customer_count,
+            'total':total,
+        }
+        return render(request,'vendor.html',context)
 
 class ProductManagement(View):
 

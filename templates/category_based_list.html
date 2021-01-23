@@ -89,19 +89,21 @@ a {
 
   <div class="container mt-100">
     <div class="row">
+        {% for product_cate in product_cate %}
         <div class="col-md-4 col-sm-6">
             <div class="card mb-30"><a class="card-img-tiles" href="#" data-abc="true">
                     <div class="inner">
-                        <div class="main-img"><img src="https://i.imgur.com/O0GMYuw.jpg" alt="Category"></div>
-                        <div class="thumblist"><img src="https://i.imgur.com/ILEU18M.jpg" alt="Category"><img src="https://i.imgur.com/2kePJmX.jpg" alt="Category"></div>
+                        <div class="main-img"><img src="{{ product_cate.imageURL }}" height="300px" alt="Category"></div>
+                        <!-- <div class="thumblist"><img src="https://i.imgur.com/ILEU18M.jpg" alt="Category"><img src="https://i.imgur.com/2kePJmX.jpg" alt="Category"></div> -->
                     </div>
                 </a>
                 <div class="card-body text-center">
-                    <h4 class="card-title">Laptops</h4>
-                    <p class="text-muted">Starting from $499</p><a class="btn btn-outline-primary btn-sm add-btn update-cart"" data-action = "add" type = "button" data-product = "{{ product.id }}">Add to Cart</a>
+                    <h4 class="card-title">{{ product_cate.product_name }}</h4>
+                    <p class="text-muted">Starting from ${{ product_cate.price }}</p><a class="btn btn-outline-primary btn-sm add-btn update-cart" data-action = "add" type = "button" data-product = "{{ product_cate.id }}">Add to Cart</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
         <!-- <div class="col-md-4 col-sm-6">
             <div class="card mb-30"><a class="card-img-tiles" href="#" data-abc="true">
                     <div class="inner">

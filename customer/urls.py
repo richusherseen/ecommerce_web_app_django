@@ -14,7 +14,7 @@ urlpatterns = [
 	path(r'checkout/',CheckOutView.as_view(),name='checkout'),
 	path('process_order',views.processOrder,name='process_order'),
 	path('view_orders',OrderListView.as_view(),name="view_orders"),
-	path('product_list_based_on_category/',views.product_list_based_on_category,name='product_list_based_on_category'),
+	path('product_list_based_on_category/<str:category_id>/',views.product_list_based_on_category,name='product_list_based_on_category'),
 
 ]
 
