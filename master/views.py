@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import View,UpdateView,FormView
 from master.forms import VendorForm,CategoryForm,UserForm,LoginForm
 from vendor.models import Vendor
+from customer.models import Profile
 from product.models import CategoryModel,OrderItem
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -146,7 +147,7 @@ class OrderDetails(View):
 
 class UserDetails(View):
     def get(self,request):
-        user = User.objects.all()
+        user = Profile.objects.all()
         context = {
             'users' : user
         }

@@ -17,7 +17,7 @@
             <table class="table" >
                 <tr>
                     <th><h5 class='total'>Items: <strong> {{ order.get_cart_items }} </strong></h5></th>
-                    <th><h5 class='total'>Total: <strong>${{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
+                    <th><h5 class='total'>Total: <strong>₹{{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
                     
                     <th><a style="float: right;margin: 5px;" class="btn btn-success" id="" href="\checkout">Checkout</a></th>
 
@@ -46,7 +46,7 @@
             <div class="cart-row" >
                 <div style="flex:2" ><img class="row-image" src="{{ item.product.imageURL }}" alt=""></div>
                 <div style="flex:2" >{{item.product.product_name}}</div>
-                <div style="flex:1" >${{item.product.price|floatformat:2}}</div>
+                <div style="flex:1" >₹{{item.product.price|floatformat:2}}</div>
                 <div style="flex:1" >
                     <p class="quantity" >{{item.quantity}}</p>
                     <div class="quantity" >
@@ -55,7 +55,7 @@
                         <img data-product="{{item.product.id}}" id="minus" data-action="remove" class="chg-quantity update-cart" src="{% static 'images/arrow-down.png' %}" alt="">
                     </div>
                 </div>
-                <div style="flex:1" >${{item.get_total}}</div>
+                <div style="flex:1" >₹ {{item.get_total}}</div>
 
             </div>
 
@@ -74,14 +74,14 @@
 <!-- <script>
     var plus =document.getElementById("plus")
     var minus =document.getElementById("minus")
-    $(function() {
-        $('#plus').click(function() {
+    ₹(function() {
+        ₹('#plus').click(function() {
             location.reload()
 
         });
      });
-     $(function() {
-        $('#minus').click(function() {
+     ₹(function() {
+        ₹('#minus').click(function() {
             location.reload()
 
         });

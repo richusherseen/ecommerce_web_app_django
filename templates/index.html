@@ -108,7 +108,7 @@
             <div class="feature-box">
 
                 <a href="{% url 'product_list_based_on_category' category.id %}">
-                    <img src="{{ category.imageURL }}">
+                    <img src="{{ category.imageURL }}" >
                 </a>
             </div>
             <span>{{ category.category_name }}</span>
@@ -130,44 +130,7 @@
         </li>
         {% endfor %}
         {% endif %}
-        <!--box-2--------------------->
-        <!-- <li class="item">
-                <div class="feature-box">
-                    <a href="#">
-                        <img src="/static/images/card slider/feature_5.jpg">
-                    </a>
-                </div>
-                <span>Garden Decor</span>
-            </li> -->
-        <!--box-3--------------------->
-        <!-- <li class="item">
-                <div class="feature-box">
-                    <a href="#">
-                        <img src="/static/images/card slider/feature_3.jpg">
-                    </a>
-                </div>
-                <span>Ladies Pouch</span>
-            </li> -->
-        <!--box-4--------------------->
-        <!-- <li class="item">
-                <div class="feature-box">
-                    <a href="#">
-                        <img src="/static/images/card slider/feature_1.jpg">
-                    </a>
-                </div>
-                <span>Collectible Decor</span>
-            </li> -->
-        <!--box-5--------------------->
-        <!-- <li class="item">
-                <div class="feature-box">
-                    <a href="#">
-                        <img src="/static/images/card slider/feature_2.jpg">
-                    </a>
-                </div>
-                <span>Gifts</span>
-            </li> -->
-
-
+       
     </ul>
 
 </section>
@@ -188,26 +151,26 @@
                 <!--1------------------------------------>
                 <li class="item-a">
                     <!--box-slider--------------->
-                    <div class="box">
+                    <div class="box" style="height:450px">
                         <!--img-box---------->
                         <div class="slide-img">
-                            <img alt="1" src="{{ product.imageURL }}">
+                            <img alt="1" src="{{ product.product.imageURL }}">
                             <!--overlayer---------->
                             <div class="overlay">
                                 <!--buy-btn------>
                                 <a class="buy-btn add-btn update-cart" data-action="add" type="button"
-                                    data-product="{{ product.id }}">Add to cart</a>
+                                    data-product="{{ product.product.id }}">Add to cart</a>
                             </div>
                         </div>
                         <!--detail-box--------->
                         <div class="detail-box">
                             <!--type-------->
                             <div class="type">
-                                <a href="#">{{ product.product_name }}</a>
-                                <span>Pack of {{ product.quantity }}</span>
+                                <a href="#">{{ product.product.product_name }}</a>
+                                <span>Pack of {{ product.product.quantity }}</span>
                             </div>
                             <!--price-------->
-                            <a href="#" class="price">${{ product.price }}</a>
+                            <a href="#" class="price">₹{{ product.product.price }}</a>
 
                         </div>
 

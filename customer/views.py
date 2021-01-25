@@ -21,7 +21,8 @@ class HomeView(View):
 		form_class = LoginForm() 
 		form_class2 = RegisterForm()      
 		template_name = 'index.html'
-		products = ProductModel.objects.all()
+		products = Offer.objects.all()
+		
 		# categories = CategoryModel.objects.all()
 		if request.user.is_authenticated:
 			categories = CategoryModel.objects.all()
@@ -52,7 +53,7 @@ class HomeView(View):
 			user = User.objects.create(username = request.POST.get('username'))
 			user.set_password(password)
 			user.save()
-			return redirect('profile')
+			return redirect('/')
 		
 		form = self.form_class(request.POST)
 		if form.is_valid():

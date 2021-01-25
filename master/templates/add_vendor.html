@@ -29,7 +29,7 @@ Add Vendor
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                   
+                   <div class="container">
                     <form role="form" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form1|crispy }}
@@ -54,7 +54,7 @@ Add Vendor
                         </div>
                         {% endif %}
                     </form>
-                    
+                </div> 
                 </div>
                 <!-- /.card -->
 

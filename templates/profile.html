@@ -50,8 +50,14 @@
                                         <form method="POST" action="{% url 'logout' %}">
                                             {% csrf_token %}
                                             <button type="submit" class='btn btn-danger'>Log Out</button>
+                                            
                                         </form> 
+                                        
                                     </div>
+                                    <form action="{% url 'view_orders' %}" method='POST'>
+                                        {% csrf_token %}
+                                        <button type="submit" class='btn btn-primary'>Order Details</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
